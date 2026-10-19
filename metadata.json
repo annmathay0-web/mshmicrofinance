@@ -1,0 +1,6 @@
+{
+  "name": "MSH Microfinance - Loan Management System",
+  "description": "MSH Microfinance - Comprehensive Cambodian loan management system with Khmer lunar calendar, rollover arrears engine, payment scheduling, and A4 PDF export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

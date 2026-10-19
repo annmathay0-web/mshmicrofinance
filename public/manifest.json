@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "MSH Microfinance - ប្រព័ន្ធគ្រប់គ្រងឥណទាន",
+  "short_name": "MSH",
+  "description": "ប្រព័ន្ធគ្រប់គ្រងឥណទាន MSH Microfinance - Loan Management System",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1E3A8A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
