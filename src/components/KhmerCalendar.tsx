@@ -97,7 +97,7 @@ export default function KhmerCalendar() {
         <div className="mb-2.5 flex items-center justify-between px-1">
           <button
             onClick={() => nav(-1)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-navy-700 transition-all hover:bg-slate-50"
+            className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 text-navy-700 transition-all hover:bg-slate-50"
             aria-label="ខែមុន"
           >
             <i className="fa-solid fa-chevron-left text-xs" />
@@ -107,7 +107,7 @@ export default function KhmerCalendar() {
           </p>
           <button
             onClick={() => nav(1)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-navy-700 transition-all hover:bg-slate-50"
+            className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 text-navy-700 transition-all hover:bg-slate-50"
             aria-label="ខែបន្ទាប់"
           >
             <i className="fa-solid fa-chevron-right text-xs" />

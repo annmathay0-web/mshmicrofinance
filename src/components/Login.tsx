@@ -148,13 +148,13 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       {/* ------------ right form panel ------------ */}
-      <div className="bg-dots pt-safe pb-safe relative flex flex-1 items-center justify-center p-5 sm:p-10">
+      <div className="bg-dots pt-safe pb-safe relative flex flex-1 items-center justify-center p-3 sm:p-8 lg:p-10">
         <div key={shakeKey} className={cn("w-full max-w-md", shakeKey > 0 && "anim-shake")}>
-          <div className="mb-6 flex items-center justify-between gap-3 lg:hidden">
-            <div className="flex items-center gap-3">
-              <MSHLogo className="h-11 w-11 shadow-md" />
+          <div className="mb-5 sm:mb-6 flex items-center justify-between gap-3 lg:hidden">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <MSHLogo className="h-10 w-10 sm:h-11 sm:w-11 shadow-md" />
               <div>
-                <p className="font-num text-lg font-bold text-navy-950">
+                <p className="font-num text-base sm:text-lg font-bold text-navy-950">
                   MSH <span className="text-gold-600 font-semibold">Microfinance</span>
                 </p>
                 <p className="text-[10px] font-medium text-slate-400">ប្រព័ន្ធគ្រប់គ្រងឥណទាន</p>
@@ -163,7 +163,7 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
             <PWAInstallButton variant="header" />
           </div>
 
-          <div className="anim-fade-up rounded-3xl border border-slate-100 bg-white p-7 sm:p-9 shadow-xl shadow-navy-950/5">
+          <div className="anim-fade-up rounded-2xl sm:rounded-3xl border border-slate-100 bg-white p-5 sm:p-8 lg:p-9 shadow-xl shadow-navy-950/5">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-600">
                 Authentication
@@ -173,13 +173,13 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
               </span>
             </div>
 
-            <h2 className="mt-2 text-2xl font-black text-navy-950">ចូលប្រើប្រាស់ប្រព័ន្ធ</h2>
+            <h2 className="mt-2 text-xl sm:text-2xl font-black text-navy-950">ចូលប្រើប្រាស់ប្រព័ន្ធ</h2>
             <p className="mt-1 text-xs text-slate-500">
               សូមបញ្ចូលគណនី និងពាក្យសម្ងាត់របស់អ្នកដើម្បីគ្រប់គ្រងឥណទាន
             </p>
 
             {error && (
-              <div className="anim-scale-in mt-5 mb-4 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700">
+              <div className="anim-scale-in mt-4 sm:mt-5 mb-4 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-700">
                 <i className={cn("fa-solid mt-0.5", locked ? "fa-lock" : "fa-circle-exclamation")} />
                 <span>
                   {error}
@@ -190,7 +190,7 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
               </div>
             )}
 
-            <form onSubmit={(e) => void submit(e)} className="mt-6 space-y-4">
+            <form onSubmit={(e) => void submit(e)} className="mt-5 sm:mt-6 space-y-4">
               <div>
                 <label className="mb-1.5 block text-xs font-bold text-navy-900">
                   ឈ្មោះគណនី <span className="font-num text-[10px] font-medium text-slate-400">(Username)</span>
@@ -204,7 +204,7 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
                     autoComplete="username"
                     maxLength={40}
                     disabled={locked}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 py-3 pl-10 pr-4 text-xs sm:text-sm font-semibold text-navy-900 outline-none focus:border-navy-900 focus:bg-white transition-all disabled:opacity-50"
+                    className="w-full min-h-[44px] rounded-2xl border border-slate-200 bg-slate-50/70 py-3 pl-10 pr-4 text-xs sm:text-sm font-semibold text-navy-900 outline-none focus:border-navy-900 focus:bg-white transition-all disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -223,13 +223,13 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
                     autoComplete="current-password"
                     maxLength={72}
                     disabled={locked}
-                    className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 py-3 pl-10 pr-11 text-xs sm:text-sm font-semibold text-navy-900 outline-none focus:border-navy-900 focus:bg-white transition-all disabled:opacity-50"
+                    className="w-full min-h-[44px] rounded-2xl border border-slate-200 bg-slate-50/70 py-3 pl-10 pr-12 text-xs sm:text-sm font-semibold text-navy-900 outline-none focus:border-navy-900 focus:bg-white transition-all disabled:opacity-50"
                   />
                   <button
                     type="button"
                     onClick={() => setShow((s) => !s)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-navy-900 p-1"
-                    aria-label="បង្ហាញពាក្យសម្ងាត់"
+                    className="tap-press absolute right-1 top-1/2 -translate-y-1/2 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center text-slate-400 hover:text-navy-900 rounded-xl"
+                    aria-label={show ? "លាក់ពាក្យសម្ងាត់" : "បង្ហាញពាក្យសម្ងាត់"}
                   >
                     <i className={cn("fa-solid text-xs", show ? "fa-eye-slash" : "fa-eye")} />
                   </button>
@@ -237,14 +237,14 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
               </div>
 
               <div className="flex items-center justify-between text-xs pt-1">
-                <label className="flex cursor-pointer select-none items-center gap-2 text-slate-600 font-medium">
+                <label className="flex cursor-pointer select-none items-center gap-2 text-slate-600 font-medium min-h-[32px]">
                   <input
                     type="checkbox"
                     checked={remember}
                     onChange={(e) => setRemember(e.target.checked)}
                     className="h-4 w-4 rounded accent-navy-900"
                   />
-                  ចងចាំការចូលប្រើ
+                  <span>ចងចាំការចូលប្រើ</span>
                 </label>
                 <span className="text-slate-400 font-medium text-[11px]">
                   Salted SHA-256 Auth
@@ -254,7 +254,7 @@ export default function Login({ onSuccess }: { onSuccess: () => void }) {
               <button
                 type="submit"
                 disabled={loading || locked}
-                className="tap-press group relative mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-navy-900 hover:bg-navy-850 py-3.5 font-bold text-white shadow-lg shadow-navy-950/20 text-xs sm:text-sm"
+                className="tap-press group relative mt-2 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-navy-900 hover:bg-navy-850 py-3.5 font-bold text-white shadow-lg shadow-navy-950/20 text-xs sm:text-sm"
               >
                 {loading ? (
                   <>

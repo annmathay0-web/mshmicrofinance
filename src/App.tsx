@@ -21,16 +21,21 @@ function ToastStack() {
     info: "fa-circle-info text-gold-400",
   };
   return (
-    <div className="pointer-events-none fixed bottom-24 right-5 z-[80] flex w-[min(92vw,380px)] flex-col gap-2 lg:bottom-5">
+    <div className="pointer-events-none fixed bottom-24 left-3 right-3 sm:left-auto sm:right-5 sm:bottom-6 z-[80] flex flex-col gap-2 sm:w-[380px] print:hidden">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className="anim-slide-right pointer-events-auto flex items-start gap-3 rounded-xl bg-navy-950 px-4 py-3.5 text-sm font-semibold text-white shadow-2xl shadow-navy-950/50 ring-1 ring-white/10"
+          role="status"
+          className="anim-slide-right pointer-events-auto flex items-start gap-3 rounded-2xl bg-navy-950/95 px-4 py-3.5 text-sm font-semibold text-white shadow-2xl shadow-navy-950/50 ring-1 ring-white/10 backdrop-blur-sm"
         >
-          <i className={cn("fa-solid mt-0.5", icons[t.kind])} />
-          <p className="flex-1 leading-5">{t.msg}</p>
-          <button onClick={() => dismissToast(t.id)} className="text-navy-400 transition-colors hover:text-white">
-            <i className="fa-solid fa-xmark" />
+          <i className={cn("fa-solid mt-0.5 shrink-0 text-base", icons[t.kind])} />
+          <p className="flex-1 leading-normal text-xs sm:text-sm">{t.msg}</p>
+          <button
+            onClick={() => dismissToast(t.id)}
+            aria-label="បិទការជូនដំណឹង"
+            className="text-navy-400 transition-colors hover:text-white h-7 w-7 shrink-0 flex items-center justify-center rounded-lg hover:bg-white/10"
+          >
+            <i className="fa-solid fa-xmark text-sm" />
           </button>
         </div>
       ))}

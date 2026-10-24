@@ -51,6 +51,7 @@ export default function Loans() {
       <button
         onClick={() => go({ name: "loan", id: x.loan.id })}
         title="មើលលម្អិត"
+        aria-label={`មើលលម្អិតកម្ចី ${x.loan.customer}`}
         className="tap-press flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-700 hover:bg-slate-50 hover:border-slate-300"
       >
         <i className="fa-solid fa-eye text-xs" />
@@ -58,6 +59,7 @@ export default function Loans() {
       <button
         onClick={() => remind(x)}
         title="ផ្ញើសាររំលឹក Telegram"
+        aria-label={`ផ្ញើសាររំលឹក Telegram ទៅកាន់ ${x.loan.customer}`}
         className="tap-press flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#229ED9] hover:bg-[#229ED9]/5"
       >
         <i className="fa-brands fa-telegram text-xs" />
@@ -65,6 +67,7 @@ export default function Loans() {
       <button
         onClick={() => askDelete(x.loan.id, x.loan.customer)}
         title="លុបកម្ចី"
+        aria-label={`លុបកម្ចី ${x.loan.customer}`}
         className={cn(
           "tap-press flex h-11 items-center justify-center rounded-xl border px-3 text-xs font-bold transition-all whitespace-nowrap",
           confirmId === x.loan.id
@@ -96,7 +99,7 @@ export default function Loans() {
               key={v}
               onClick={() => setType(v)}
               className={cn(
-                "flex-1 sm:flex-initial rounded-lg px-2.5 sm:px-3 py-2 min-h-[36px] text-xs font-bold transition-all tap-press text-center whitespace-nowrap",
+                "flex-1 sm:flex-initial rounded-lg px-2 sm:px-3 py-2 min-h-[36px] text-[11px] sm:text-xs font-bold transition-all tap-press text-center whitespace-nowrap",
                 type === v ? "bg-navy-900 text-white shadow-xs" : "text-slate-600 hover:text-navy-900"
               )}
             >

@@ -190,7 +190,7 @@ export default function Dashboard() {
             <div className="mt-3.5 sm:mt-5">
               <Money
                 v={totalPrincipal}
-                className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-none"
+                className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-none break-words"
               />
               <div className="mt-2.5 sm:mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-navy-200">
                 <span className="flex items-center gap-1.5">
@@ -206,24 +206,27 @@ export default function Dashboard() {
             </div>
 
             {/* Quick Action Ribbon inside Card */}
-            <div className="mt-4 pt-3.5 sm:mt-6 sm:pt-5 border-t border-white/10 grid grid-cols-3 gap-2">
+            <div className="mt-4 pt-3.5 sm:mt-6 sm:pt-5 border-t border-white/10 grid grid-cols-3 gap-1.5 sm:gap-2">
               <button
                 onClick={() => go({ name: "collection" })}
-                className="tap-press flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/15 p-2 sm:p-2.5 transition-all text-center"
+                aria-label="ប្រមូលប្រាក់"
+                className="tap-press min-h-[44px] flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/15 p-2 sm:p-2.5 transition-all text-center"
               >
                 <i className="fa-solid fa-money-bill-trend-up text-gold-400 text-sm sm:text-base" />
                 <span className="text-[10px] sm:text-[11px] font-bold text-white">ប្រមូលប្រាក់</span>
               </button>
               <button
                 onClick={() => go({ name: "new" })}
-                className="tap-press flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-gold-gradient text-navy-950 p-2 sm:p-2.5 shadow-md shadow-gold-500/20 font-bold transition-all text-center"
+                aria-label="បង្កើតកម្ចីថ្មី"
+                className="tap-press min-h-[44px] flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-gold-gradient text-navy-950 p-2 sm:p-2.5 shadow-md shadow-gold-500/20 font-bold transition-all text-center"
               >
                 <i className="fa-solid fa-circle-plus text-sm sm:text-base" />
                 <span className="text-[10px] sm:text-[11px]">បង្កើតកម្ចី</span>
               </button>
               <button
                 onClick={() => go({ name: "loans" })}
-                className="tap-press flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/15 p-2 sm:p-2.5 transition-all text-center"
+                aria-label="បញ្ជីកម្ចីទាំងអស់"
+                className="tap-press min-h-[44px] flex flex-col items-center justify-center gap-1 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/15 p-2 sm:p-2.5 transition-all text-center"
               >
                 <i className="fa-solid fa-file-invoice-dollar text-mint-300 text-sm sm:text-base" />
                 <span className="text-[10px] sm:text-[11px] font-bold text-white">បញ្ជីកម្ចី</span>
@@ -237,21 +240,21 @@ export default function Dashboard() {
           {/* Card 1: Due Today */}
           <div className="anim-fade-up d2 rounded-2xl sm:rounded-3xl border border-slate-100 bg-white p-3.5 sm:p-5 shadow-xs flex flex-col justify-between">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 truncate">
+              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">
                 ត្រូវប្រមូលថ្ងៃនេះ
               </p>
               <span className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 border border-amber-200/80">
                 <i className="fa-solid fa-hand-holding-dollar text-xs sm:text-sm" />
               </span>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 min-w-0">
               <Money
                 v={dueToday}
-                className="block text-lg sm:text-2xl font-black text-navy-900 leading-tight"
+                className="block text-base xs:text-lg sm:text-2xl font-black text-navy-900 leading-tight break-words whitespace-normal"
               />
-              <p className="text-[10px] sm:text-xs text-slate-500 mt-1 flex items-center gap-1.5 truncate">
+              <p className="text-[10px] sm:text-xs text-slate-500 mt-1 flex items-center gap-1.5 flex-wrap">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
-                <span className="truncate">
+                <span>
                   <span className="font-num font-bold text-navy-800">{dueRows.length}</span> កម្ចីត្រូវបង់
                 </span>
               </p>
@@ -261,21 +264,21 @@ export default function Dashboard() {
           {/* Card 2: Collected Today */}
           <div className="anim-fade-up d3 rounded-2xl sm:rounded-3xl border border-slate-100 bg-white p-3.5 sm:p-5 shadow-xs flex flex-col justify-between">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 truncate">
+              <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400">
                 ប្រមូលបានថ្ងៃនេះ
               </p>
               <span className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/80">
                 <i className="fa-solid fa-circle-check text-xs sm:text-sm" />
               </span>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 min-w-0">
               <Money
                 v={collectedToday}
-                className="block text-lg sm:text-2xl font-black text-emerald-600 leading-tight"
+                className="block text-base xs:text-lg sm:text-2xl font-black text-emerald-600 leading-tight break-words whitespace-normal"
               />
-              <p className="text-[10px] sm:text-xs text-slate-500 mt-1 flex items-center gap-1.5 truncate">
+              <p className="text-[10px] sm:text-xs text-slate-500 mt-1 flex items-center gap-1.5 flex-wrap">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                <span className="truncate">
+                <span>
                   {db.payments.filter((p) => p.date === t).length} ប្រតិបត្តិការ
                 </span>
               </p>
@@ -387,7 +390,8 @@ export default function Dashboard() {
                       <button
                         onClick={() => quickCollect(x)}
                         title="ប្រមូលប្រាក់រហ័ស"
-                        className="tap-press flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm shadow-emerald-500/25 font-bold"
+                        aria-label={`ប្រមូលប្រាក់រហ័សសម្រាប់ ${x.loan.customer}`}
+                        className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm shadow-emerald-500/25 font-bold"
                       >
                         <i className="fa-solid fa-check text-xs sm:text-sm" />
                       </button>

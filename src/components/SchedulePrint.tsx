@@ -340,11 +340,20 @@ export default function SchedulePrint({ loan, st, db, onClose }: SchedulePrintPr
             onClick={onClose}
             className="tap-press flex h-11 w-11 sm:w-auto items-center justify-center rounded-xl border border-white/20 bg-white/10 sm:px-3.5 py-2.5 text-xs font-bold text-white hover:bg-white/20 min-h-[44px]"
             title="បិទ (Close)"
+            aria-label="បិទផ្ទាំងកាលវិភាគ"
           >
             <i className="fa-solid fa-xmark sm:mr-1.5" />
             <span className="hidden sm:inline">បិទ</span>
           </button>
         </div>
+      </div>
+
+      {/* Mobile Horizontal Scroll Hint */}
+      <div className="sm:hidden px-4 py-2 bg-navy-900/80 border-b border-white/5 text-center print:hidden">
+        <p className="text-[11px] font-semibold text-gold-300/90 flex items-center justify-center gap-1.5">
+          <i className="fa-solid fa-arrows-left-right text-[10px]" />
+          <span>ទំហំ A4 ផ្លូវការ • អូសឆ្វេងស្តាំដើម្បីពិនិត្យ ឬចុច "ចែករំលែក PDF"</span>
+        </p>
       </div>
 
       {/* Mobile Status & Action Banner (Appears when PDF is generated or status updates) */}

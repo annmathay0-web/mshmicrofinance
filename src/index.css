@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 400px;
   --font-sans: "Kantumruy Pro", "Noto Sans Khmer", ui-sans-serif, system-ui, sans-serif;
   --font-num: "Space Grotesk", "Kantumruy Pro", ui-sans-serif, sans-serif;
 
@@ -43,6 +44,8 @@
 html {
   font-family: var(--font-sans);
   overflow-y: auto;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -50,13 +53,25 @@ body {
   color: var(--color-ink);
   overflow-x: clip;
   overflow-y: auto;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Ensure Khmer text with tone marks & subscripts is never vertically clipped */
+h1, h2, h3, h4, h5, h6, p, span, button, input, textarea, select, label {
+  font-feature-settings: "kern" 1;
+}
+
 button, input, select, textarea, label {
   touch-action: manipulation;
+}
+
+/* Accessible focus ring across all interactive controls */
+:focus-visible {
+  outline: 2px solid #d4af37 !important;
+  outline-offset: 2px !important;
 }
 
 /* Prevent iOS Safari & Android Chrome from auto-zooming or squishing viewport when virtual keyboard opens */
@@ -229,7 +244,7 @@ button, input, select, textarea, label {
   margin: 10mm 10mm 10mm 10mm;
 }
 
-@media print {
+  @media print {
   html, body {
     background: #ffffff !important;
     color: #0b192c !important;
@@ -240,6 +255,10 @@ button, input, select, textarea, label {
     overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  input, select, textarea {
+    font-size: inherit !important;
   }
 
   body.printing-receipt * { visibility: hidden !important; }

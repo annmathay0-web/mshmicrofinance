@@ -24,11 +24,11 @@ export default function ReceiptModal({
 
   return (
     <Modal onClose={onClose} maxW="max-w-md">
-      <div className="p-5 sm:p-6">
+      <div className="p-3.5 sm:p-6">
         {/* Printable Bank Slip */}
         <div
           id="print-slip"
-          className="rounded-3xl border-2 border-dashed border-slate-200 bg-white p-6 sm:p-7 relative overflow-hidden shadow-xs"
+          className="rounded-2xl sm:rounded-3xl border-2 border-dashed border-slate-200 bg-white p-4 sm:p-7 relative overflow-hidden shadow-xs"
         >
           {/* Watermark Seal */}
           <div className="absolute right-4 bottom-14 opacity-5 pointer-events-none select-none font-black text-7xl text-navy-950 -rotate-12">
@@ -165,10 +165,10 @@ export function BulkReceiptModal({
 
   return (
     <Modal onClose={onClose} maxW="max-w-md">
-      <div className="p-5 sm:p-6">
+      <div className="p-3.5 sm:p-6">
         <div
           id="print-slip"
-          className="rounded-3xl border-2 border-dashed border-slate-200 bg-white p-6 sm:p-7 relative overflow-hidden shadow-xs"
+          className="rounded-2xl sm:rounded-3xl border-2 border-dashed border-slate-200 bg-white p-4 sm:p-7 relative overflow-hidden shadow-xs"
         >
           <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
             <MSHLogo className="h-12 w-12 shadow-xs" />

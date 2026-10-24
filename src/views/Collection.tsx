@@ -237,6 +237,7 @@ export default function Collection() {
               type="button"
               onClick={() => shiftDay(-1)}
               title="ថ្ងៃមុន"
+              aria-label="ថ្ងៃមុន"
               className="tap-press flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-navy-800"
             >
               <i className="fa-solid fa-chevron-left text-xs" />
@@ -245,6 +246,7 @@ export default function Collection() {
               type="button"
               onClick={() => shiftDay(1)}
               title="ថ្ងៃបន្ទាប់"
+              aria-label="ថ្ងៃបន្ទាប់"
               className="tap-press flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-navy-800"
             >
               <i className="fa-solid fa-chevron-right text-xs" />
@@ -528,7 +530,7 @@ export default function Collection() {
                     </div>
 
                     <div className="flex items-center gap-1.5 w-full sm:w-auto">
-                      <div className="relative flex-1 sm:w-32">
+                      <div className="relative flex-1 min-w-[90px] sm:w-32">
                         <input
                           type="text"
                           inputMode="decimal"
@@ -540,6 +542,7 @@ export default function Collection() {
                             }))
                           }
                           onFocus={(e) => e.target.select()}
+                          aria-label={`ចំនួនទឹកប្រាក់ប្រមូលសម្រាប់ ${loan.customer}`}
                           className="font-num h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-bold text-navy-900 outline-none focus:border-emerald-500 focus:bg-white"
                         />
                         {isCustomAmt && (
@@ -553,7 +556,8 @@ export default function Collection() {
                               })
                             }
                             title="កំណត់ចំនួនឡើងវិញ"
-                            className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-navy-800 px-1.5 py-1"
+                            aria-label="កំណត់ចំនួនឡើងវិញ"
+                            className="tap-press absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 hover:text-navy-800 px-1.5 py-1"
                           >
                             <i className="fa-solid fa-rotate-left" />
                           </button>
@@ -564,7 +568,8 @@ export default function Collection() {
                         type="button"
                         disabled={collectingId === loan.id}
                         onClick={() => collect(snap)}
-                        className="tap-press flex h-11 items-center justify-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 px-4 text-xs font-bold text-white shadow-xs shadow-emerald-500/30 shrink-0 min-w-[84px] disabled:opacity-70 whitespace-nowrap"
+                        aria-label={`ប្រមូលប្រាក់ ${loan.customer}`}
+                        className="tap-press flex h-11 items-center justify-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 px-3.5 sm:px-4 text-xs font-bold text-white shadow-xs shadow-emerald-500/30 shrink-0 min-w-[76px] sm:min-w-[84px] disabled:opacity-70 whitespace-nowrap"
                       >
                         {collectingId === loan.id ? (
                           <i className="fa-solid fa-circle-notch fa-spin text-xs" />
@@ -578,6 +583,7 @@ export default function Collection() {
                         type="button"
                         onClick={() => void remind(snap)}
                         title="ផ្ញើសាររំលឹក Telegram"
+                        aria-label="ផ្ញើសាររំលឹក Telegram"
                         className="tap-press flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#229ED9] hover:bg-[#229ED9]/10"
                       >
                         <i className="fa-brands fa-telegram text-sm" />
@@ -587,6 +593,7 @@ export default function Collection() {
                         type="button"
                         onClick={() => go({ name: "loan", id: loan.id })}
                         title="មើលលម្អិត"
+                        aria-label="មើលលម្អិតកម្ចី"
                         className="tap-press flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-700 hover:bg-slate-50"
                       >
                         <i className="fa-solid fa-eye text-xs" />
@@ -632,7 +639,8 @@ export default function Collection() {
                         type="button"
                         onClick={() => setReceipt({ loan, payment: p })}
                         title="មើលបង្កាន់ដៃ"
-                        className="tap-press flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-gold-600 hover:border-gold-400 shrink-0"
+                        aria-label={`មើលបង្កាន់ដៃសម្រាប់ ${loan.customer}`}
+                        className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white text-gold-600 hover:border-gold-400 shrink-0"
                       >
                         <i className="fa-solid fa-receipt text-xs" />
                       </button>
@@ -663,7 +671,8 @@ export default function Collection() {
                       type="button"
                       onClick={() => go({ name: "loan", id: snap.loan.id })}
                       title="មើលលម្អិត"
-                      className="tap-press flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-navy-700 hover:bg-slate-50 shrink-0"
+                      aria-label={`មើលលម្អិតកម្ចី ${snap.loan.customer}`}
+                      className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-700 hover:bg-slate-50 shrink-0"
                     >
                       <i className="fa-solid fa-eye text-xs" />
                     </button>
@@ -697,7 +706,8 @@ export default function Collection() {
                       type="button"
                       onClick={() => void remind(x)}
                       title="ផ្ញើសាររំលឹក Telegram"
-                      className="tap-press flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-[#229ED9] shrink-0"
+                      aria-label={`ផ្ញើសាររំលឹក Telegram ទៅ ${x.loan.customer}`}
+                      className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 text-[#229ED9] hover:bg-[#229ED9]/10 shrink-0"
                     >
                       <i className="fa-brands fa-telegram text-xs" />
                     </button>
@@ -730,7 +740,8 @@ export default function Collection() {
                 <button
                   type="button"
                   onClick={() => setPickerOpen(false)}
-                  className="tap-press flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/20"
+                  aria-label="បិទផ្ទាំងរើសកាលបរិច្ឆេទ"
+                  className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/20"
                 >
                   <i className="fa-solid fa-xmark" />
                 </button>
@@ -746,7 +757,8 @@ export default function Collection() {
                     const d = new Date(calY, calM - 1, 1);
                     setCalYm([d.getFullYear(), d.getMonth()]);
                   }}
-                  className="tap-press flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-navy-800 hover:bg-slate-50"
+                  aria-label="ខែមុន"
+                  className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 text-navy-800 hover:bg-slate-50"
                 >
                   <i className="fa-solid fa-chevron-left text-xs" />
                 </button>
@@ -761,7 +773,8 @@ export default function Collection() {
                     const d = new Date(calY, calM + 1, 1);
                     setCalYm([d.getFullYear(), d.getMonth()]);
                   }}
-                  className="tap-press flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-navy-800 hover:bg-slate-50"
+                  aria-label="ខែបន្ទាប់"
+                  className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 text-navy-800 hover:bg-slate-50"
                 >
                   <i className="fa-solid fa-chevron-right text-xs" />
                 </button>

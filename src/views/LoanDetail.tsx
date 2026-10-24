@@ -291,7 +291,7 @@ export default function LoanDetail({ id }: { id: string }) {
               )}
             >
               <p className="text-[10px] uppercase font-bold tracking-wider text-navy-300 truncate">{kh}</p>
-              <p className="font-num mt-0.5 text-xs sm:text-base font-black text-white truncate" title={v}>
+              <p className="font-num mt-0.5 text-xs sm:text-base font-black text-white break-words whitespace-normal leading-tight" title={v}>
                 {v}
               </p>
             </div>
@@ -459,13 +459,14 @@ export default function LoanDetail({ id }: { id: string }) {
                         <button
                           onClick={() => startCollectUpTo(i.i)}
                           title={`ប្រមូលដល់លើកទី ${i.i + 1}`}
-                          className="tap-press flex h-9 items-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white px-3.5 text-xs font-bold shadow-xs"
+                          aria-label={`ប្រមូលប្រាក់ដល់លើកទី ${i.i + 1}`}
+                          className="tap-press flex h-11 min-h-[44px] items-center gap-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white px-3.5 text-xs font-bold shadow-xs whitespace-nowrap"
                         >
                           <i className="fa-solid fa-hand-holding-dollar text-xs" />
                           <span>ប្រមូល</span>
                         </button>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                        <span className="inline-flex min-h-[44px] items-center gap-1 rounded-xl bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
                           <i className="fa-solid fa-circle-check text-xs" />
                           <span>រួចរាល់</span>
                         </span>
@@ -474,7 +475,8 @@ export default function LoanDetail({ id }: { id: string }) {
                         <button
                           onClick={() => setReceipt({ loan, payment: latest })}
                           title="មើលបង្កាន់ដៃ"
-                          className="tap-press flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-700 hover:bg-slate-50"
+                          aria-label={`មើលបង្កាន់ដៃលើកទី ${i.i + 1}`}
+                          className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-700 hover:bg-slate-50"
                         >
                           <i className="fa-solid fa-receipt text-xs" />
                         </button>

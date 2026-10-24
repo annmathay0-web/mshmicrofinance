@@ -38,9 +38,16 @@ export default function Shell({
 }) {
   const { db, view, go, requestImport, toast, syncNow, flushQueue, queue, syncing } = useApp();
   const [drawer, setDrawer] = useState(false);
-  const [menu, setMenu] = useState(false);
+  const [backupMenu, setBackupMenu] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const [online, setOnline] = useState(() => (typeof navigator === "undefined" ? true : navigator.onLine));
+
+  useEffect(() => {
+    setUserMenu(false);
+    setBackupMenu(false);
+    setDrawer(false);
+  }, [view]);
 
   useEffect(() => {
     const up = () => setOnline(true);
@@ -110,8 +117,9 @@ export default function Shell({
             <p className="text-[10px] font-medium text-navy-300 truncate">ប្រព័ន្ធគ្រប់គ្រងឥណទាន</p>
           </div>
           <button
-            className="ml-auto text-navy-300 hover:text-white lg:hidden h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/10"
+            className="ml-auto text-navy-300 hover:text-white lg:hidden h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl hover:bg-white/10"
             onClick={() => setDrawer(false)}
+            aria-label="បិទម៉ឺនុយ"
           >
             <i className="fa-solid fa-xmark text-lg" />
           </button>
@@ -223,7 +231,8 @@ export default function Shell({
             <button
               onClick={onLogout}
               title="ចាកចេញ (Logout)"
-              className="text-navy-300 hover:text-rose-400 p-1.5 rounded-lg hover:bg-white/5 transition-colors"
+              aria-label="ចាកចេញពីគណនី"
+              className="text-navy-300 hover:text-rose-400 h-11 w-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl hover:bg-white/10 transition-colors"
             >
               <i className="fa-solid fa-arrow-right-from-bracket" />
             </button>
@@ -232,12 +241,12 @@ export default function Shell({
       </aside>
 
       {/* ================= main viewport ================= */}
-      <div className="flex min-h-screen flex-col pb-36 lg:pb-0 lg:pl-[270px]">
+      <div className="flex min-h-screen flex-col pb-28 sm:pb-32 lg:pb-0 lg:pl-[270px]">
         {/* Mobile & Desktop App Bar */}
-        <header className="pt-safe-header sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
-          <div className="flex items-center justify-between gap-2.5 px-3.5 py-2.5 sm:px-6 sm:py-3.5 lg:px-8">
+        <header className="pt-safe-header sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur-md print:hidden">
+          <div className="flex items-center justify-between gap-2 px-3 py-2 sm:px-6 sm:py-3 lg:px-8">
             {/* Left: Menu & Brand Lockup */}
-            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
               <button
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-800 shadow-xs tap-press lg:hidden"
                 onClick={() => setDrawer(true)}
@@ -252,33 +261,33 @@ export default function Shell({
                     MSH Microfinance
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5">
-                  <h1 className="truncate text-sm sm:text-lg lg:text-xl font-bold text-navy-950 leading-tight">
+                <div className="flex items-center gap-2 mt-0.5">
+                  <h1 className="truncate text-sm sm:text-base lg:text-lg font-bold text-navy-950 leading-normal">
                     {title}
                   </h1>
-                  <span className="inline-flex xl:hidden items-center gap-1 rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-navy-700 shrink-0">
-                    <i className="fa-regular fa-calendar text-[9px] text-gold-600" />
-                    <span>{fmtKHFull(todayISO())}</span>
-                  </span>
                 </div>
               </div>
             </div>
 
             {/* Right: Actions & Profile */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+              {/* Desktop Full Calendar Pill */}
               <span className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-xs font-semibold text-navy-700 xl:flex shadow-2xs">
                 <i className="fa-regular fa-calendar text-gold-600" /> {fmtKHFull(todayISO())}
               </span>
 
-              {/* Install PWA Button */}
-              <PWAInstallButton variant="header" />
+              {/* Install PWA Button on Tablets & Desktops */}
+              <div className="hidden sm:block">
+                <PWAInstallButton variant="header" />
+              </div>
 
-              {/* Sync Trigger */}
+              {/* Sync Trigger (Always visible, primary action for field officers) */}
               <button
                 onClick={() => {
                   void (queue.length > 0 ? flushQueue() : syncNow());
                 }}
                 title={queue.length > 0 ? `${queue.length} រង់ចាំ Sync` : "Sync ទៅ Google Sheets"}
+                aria-label="Sync ទៅ Google Sheets"
                 className="relative flex h-11 w-11 sm:w-auto sm:px-3.5 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-navy-800 shadow-xs hover:border-mint-300 tap-press"
               >
                 <i
@@ -306,19 +315,20 @@ export default function Shell({
                 )}
               </button>
 
-              {/* Backup Menu Dropdown */}
-              <div className="relative">
+              {/* Backup Menu on Tablet & Desktop */}
+              <div className="relative hidden sm:block">
                 <button
-                  onClick={() => setMenu((m) => !m)}
-                  className="flex h-11 w-11 sm:w-auto sm:px-3.5 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-navy-800 shadow-xs hover:border-slate-300 tap-press"
+                  onClick={() => setBackupMenu((m) => !m)}
+                  aria-label="ម៉ឺនុយ Backup"
+                  className="flex h-11 w-auto px-3.5 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-navy-800 shadow-xs hover:border-slate-300 tap-press"
                 >
                   <i className="fa-solid fa-database text-slate-500 text-sm" />
-                  <span className="hidden sm:inline">Backup</span>
-                  <i className="fa-solid fa-chevron-down hidden text-[10px] text-slate-400 sm:inline" />
+                  <span>Backup</span>
+                  <i className="fa-solid fa-chevron-down text-[10px] text-slate-400" />
                 </button>
-                {menu && (
+                {backupMenu && (
                   <>
-                    <div className="fixed inset-0 z-40" onClick={() => setMenu(false)} />
+                    <div className="fixed inset-0 z-40" onClick={() => setBackupMenu(false)} />
                     <div className="anim-scale-in absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-navy-950/10">
                       <div className="border-b border-slate-100 px-4 py-3 bg-slate-50/70">
                         <p className="font-num text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
@@ -330,7 +340,7 @@ export default function Shell({
                         onClick={() => {
                           const ok = downloadBackup(db);
                           if (ok) markBackupDone();
-                          setMenu(false);
+                          setBackupMenu(false);
                           toast(
                             ok ? "បានទាញយកឯកសារ Backup ជាទម្រង់ JSON" : "មិនអាចបង្កើតឯកសារ Backup",
                             ok ? "success" : "error"
@@ -351,7 +361,7 @@ export default function Shell({
                               ok ? "success" : "error"
                             )
                           );
-                          setMenu(false);
+                          setBackupMenu(false);
                         }}
                         className="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-xs font-bold text-navy-800 hover:bg-slate-50 transition-colors"
                       >
@@ -363,7 +373,7 @@ export default function Shell({
                       <button
                         onClick={() => {
                           fileRef.current?.click();
-                          setMenu(false);
+                          setBackupMenu(false);
                         }}
                         className="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-xs font-bold text-navy-800 hover:bg-slate-50 transition-colors"
                       >
@@ -389,43 +399,108 @@ export default function Shell({
                 }}
               />
 
-              {/* Profile Badge & Logout */}
-              <div className="flex items-center gap-1.5 sm:gap-2 border-l border-slate-200 pl-2 sm:pl-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-navy-800 to-navy-950 text-sm font-bold text-gold-400 border border-gold-400/30 shadow-xs">
-                  {whoLetter}
-                </span>
-                <div className="hidden lg:block">
-                  <p className="text-xs font-bold text-navy-900 leading-tight">{whoName}</p>
-                  <p className="font-num text-[10px] text-gold-600 font-semibold">{who?.role ?? "Admin"}</p>
-                </div>
+              {/* Profile Badge & Dropdown on Mobile / Direct on Desktop */}
+              <div className="relative">
                 <button
-                  onClick={onLogout}
-                  title="ចាកចេញ (Logout)"
-                  className="hidden sm:flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-600 hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 tap-press"
+                  type="button"
+                  onClick={() => setUserMenu((m) => !m)}
+                  aria-label="ព័ត៌មានគណនី និងម៉ឺនុយ"
+                  className="flex items-center gap-1.5 sm:gap-2 rounded-xl sm:rounded-none p-0.5 sm:p-0 border sm:border-0 border-slate-200 sm:border-l sm:border-slate-200 sm:pl-2.5 tap-press"
                 >
-                  <i className="fa-solid fa-arrow-right-from-bracket text-xs" />
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-navy-800 to-navy-950 text-sm font-bold text-gold-400 border border-gold-400/30 shadow-xs">
+                    {whoLetter}
+                  </span>
+                  <div className="hidden lg:block text-left">
+                    <p className="text-xs font-bold text-navy-900 leading-tight">{whoName}</p>
+                    <p className="font-num text-[10px] text-gold-600 font-semibold">{who?.role ?? "Admin"}</p>
+                  </div>
                 </button>
+
+                {/* Mobile consolidated dropdown menu */}
+                {userMenu && (
+                  <div className="sm:hidden">
+                    <div className="fixed inset-0 z-40 bg-navy-950/30" onClick={() => setUserMenu(false)} />
+                    <div className="anim-scale-in absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-navy-950/10">
+                      <div className="border-b border-slate-100 px-4 py-3 bg-slate-50/70">
+                        <p className="text-xs font-bold text-navy-900">{whoName}</p>
+                        <p className="font-num text-[10px] text-gold-600 font-semibold">{who?.role ?? "Admin"}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const ok = downloadBackup(db);
+                          if (ok) markBackupDone();
+                          setUserMenu(false);
+                          toast(
+                            ok ? "បានទាញយកឯកសារ Backup ជាទម្រង់ JSON" : "មិនអាចបង្កើតឯកសារ Backup",
+                            ok ? "success" : "error"
+                          );
+                        }}
+                        className="flex w-full items-center gap-3 px-4 py-3 text-xs font-bold text-navy-800 hover:bg-slate-50 transition-colors"
+                      >
+                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
+                          <i className="fa-solid fa-file-arrow-down" />
+                        </span>
+                        <span>ទាញយក Backup (Download)</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          fileRef.current?.click();
+                          setUserMenu(false);
+                        }}
+                        className="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-xs font-bold text-navy-800 hover:bg-slate-50 transition-colors"
+                      >
+                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-50 text-gold-700">
+                          <i className="fa-solid fa-file-arrow-up" />
+                        </span>
+                        <span>នាំចូលទិន្នន័យ (Restore)</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUserMenu(false);
+                          onLogout();
+                        }}
+                        className="flex w-full items-center gap-3 border-t border-slate-100 px-4 py-3 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+                      >
+                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                          <i className="fa-solid fa-arrow-right-from-bracket" />
+                        </span>
+                        <span>ចាកចេញ (Logout)</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {/* Dedicated Logout button for tablet and desktop */}
+              <button
+                onClick={onLogout}
+                title="ចាកចេញ (Logout)"
+                aria-label="ចាកចេញពីប្រព័ន្ធ"
+                className="hidden sm:flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-navy-600 hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 tap-press"
+              >
+                <i className="fa-solid fa-arrow-right-from-bracket text-xs" />
+              </button>
             </div>
           </div>
         </header>
 
         {/* Content Body */}
-        <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 max-w-[1340px] w-full mx-auto pb-16 sm:pb-8">
+        <main className="flex-1 px-3.5 py-4 sm:px-6 sm:py-6 lg:px-8 max-w-[1340px] w-full mx-auto pb-28 sm:pb-32 lg:pb-8">
           {children}
         </main>
 
-        <footer className="border-t border-slate-200/70 px-6 py-4 text-center text-xs text-slate-400 mb-6 lg:mb-0">
+        <footer className="border-t border-slate-200/70 px-6 py-4 text-center text-xs text-slate-400 mb-6 lg:mb-0 print:hidden">
           MSH Microfinance • 2026 រក្សាសិទ្ធិគ្រប់យ៉ាង
         </footer>
       </div>
 
       {/* ================= Top-Tier Mobile Banking Bottom Bar ================= */}
-      <nav className="anim-fade-up fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/95 backdrop-blur-lg shadow-[0_-10px_30px_rgba(11,25,44,0.08)] lg:hidden">
-        <div className="pb-safe grid grid-cols-5 items-center px-2 pt-1.5 min-h-[64px]">
+      <nav className="anim-fade-up fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/80 bg-white/95 backdrop-blur-lg shadow-[0_-10px_30px_rgba(11,25,44,0.08)] lg:hidden print:hidden">
+        <div className="pb-safe grid grid-cols-5 items-center px-1 xs:px-2 pt-1.5 min-h-[64px]">
           {/* Tab 1: Dashboard */}
           <button
             onClick={() => go({ name: "dashboard" })}
+            aria-label="ផ្ទាំងគ្រប់គ្រង"
             className={cn(
               "relative flex flex-col items-center justify-center min-h-[48px] gap-1 text-[10px] font-bold tap-press transition-colors",
               mobActive("dashboard") ? "text-navy-950 font-extrabold" : "text-slate-400 hover:text-slate-600"
@@ -443,6 +518,7 @@ export default function Shell({
           {/* Tab 2: Collection */}
           <button
             onClick={() => go({ name: "collection" })}
+            aria-label="ប្រមូលប្រាក់"
             className={cn(
               "relative flex flex-col items-center justify-center min-h-[48px] gap-1 text-[10px] font-bold tap-press transition-colors",
               mobActive("collection") ? "text-navy-950 font-extrabold" : "text-slate-400 hover:text-slate-600"
@@ -476,6 +552,7 @@ export default function Shell({
           {/* Tab 3: Loans */}
           <button
             onClick={() => go({ name: "loans" })}
+            aria-label="បញ្ជីកម្ចី"
             className={cn(
               "relative flex flex-col items-center justify-center min-h-[48px] gap-1 text-[10px] font-bold tap-press transition-colors",
               mobActive("loans") ? "text-navy-950 font-extrabold" : "text-slate-400 hover:text-slate-600"
@@ -493,6 +570,7 @@ export default function Shell({
           {/* Tab 4: Settings */}
           <button
             onClick={() => go({ name: "settings" })}
+            aria-label="ការកំណត់"
             className={cn(
               "relative flex flex-col items-center justify-center min-h-[48px] gap-1 text-[10px] font-bold tap-press transition-colors",
               mobActive("settings") ? "text-navy-950 font-extrabold" : "text-slate-400 hover:text-slate-600"

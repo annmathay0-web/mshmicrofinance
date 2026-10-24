@@ -318,7 +318,8 @@ export default function Settings() {
                       <button
                         onClick={() => restoreHoliday(h)}
                         title="កំណត់ជាថ្ងៃឈប់សម្រាកវិញ"
-                        className="tap-press flex h-7 w-7 items-center justify-center rounded-lg border border-emerald-300 bg-emerald-50 text-emerald-700 shrink-0"
+                        aria-label={`កំណត់ថ្ងៃឈប់សម្រាក ${h.name} ឡើងវិញ`}
+                        className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-emerald-300 bg-emerald-50 text-emerald-700 shrink-0"
                       >
                         <i className="fa-solid fa-rotate-left text-xs" />
                       </button>
@@ -326,7 +327,8 @@ export default function Settings() {
                       <button
                         onClick={() => removeHoliday(h)}
                         title="លុប ឬកំណត់ឱ្យធ្វើការ"
-                        className="tap-press flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-400 hover:text-rose-600 shrink-0"
+                        aria-label={`លុប ឬកំណត់ឱ្យធ្វើការថ្ងៃ ${h.name}`}
+                        className="tap-press flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-400 hover:text-rose-600 shrink-0"
                       >
                         <i className="fa-solid fa-xmark text-xs" />
                       </button>

@@ -112,3 +112,71 @@ test("Zero-Gap Sequential Bulk Repayment up to index", () => {
   assert.equal(plan.rows.length, 3);
   assert.equal(plan.total, 600000); // 200,000 * 3
 });
+
+test("Overpayment & Advance Credit: excess payment rolls forward as credit to reduce next installment", () => {
+  const db = makeInitialDB();
+  const loan = {
+    id: "l-overpay",
+    code: "LN-OVER",
+    customer: "អ៊ុច វុទ្ធី",
+    phone: "012888999",
+    type: "daily" as const,
+    principal: 3000000,
+    interest: 0,
+    term: 3,
+    startDate: "2026-03-02",
+    createdAt: "2026-03-02",
+  };
+
+  // 3 installments of 1,000,000 each.
+  // Customer pays 1,400,000 on Inst 0 (excess 400,000)
+  const payments = [
+    { id: "p1", loanId: "l-overpay", inst: 0, date: "2026-03-03", amount: 1400000 },
+  ];
+
+  const sched = scheduleOf(loan, payments, db.settings);
+  assert.equal(sched.length, 3);
+
+  // Inst 0: paid 1,400,000, requiredDue 1,000,000, excess 400,000, status paid
+  assert.equal(sched[0].paid, 1400000);
+  assert.equal(sched[0].excess, 400000);
+  assert.equal(sched[0].status, "paid");
+
+  // Inst 1: carriedIn = -400,000 (advance credit), base 1,000,000 -> requiredDue = 600,000
+  assert.equal(sched[1].carriedIn, -400000);
+  assert.equal(sched[1].requiredDue, 600000);
+  assert.equal(sched[1].balance, 600000);
+});
+
+test("Overpayment clearing an entire future installment sequentially", () => {
+  const db = makeInitialDB();
+  const loan = {
+    id: "l-bigpay",
+    code: "LN-BIG",
+    customer: "សេង គឹមសាន",
+    phone: "088776655",
+    type: "daily" as const,
+    principal: 2000000,
+    interest: 0,
+    term: 3,
+    startDate: "2026-03-02",
+    createdAt: "2026-03-02",
+  };
+
+  // Base installment: ~666,666.66.
+  // Total exact = 2,000,000. Customer pays 1,500,000 on Inst 0.
+  const payments = [
+    { id: "p1", loanId: "l-bigpay", inst: 0, date: "2026-03-03", amount: 1500000 },
+  ];
+
+  const sched = scheduleOf(loan, payments, db.settings);
+  assert.equal(sched[0].status, "paid");
+  assert.ok(sched[0].excess > 800000); // 1,500,000 - 666,666.66 = 833,333.34
+  // Inst 1 is completely covered by advance credit
+  assert.equal(sched[1].status, "paid");
+  assert.equal(sched[1].balance, 0);
+  // Remaining excess rolls into Inst 2
+  assert.ok(sched[2].carriedIn < 0);
+  assert.ok(sched[2].balance < sched[2].amount);
+});
+
